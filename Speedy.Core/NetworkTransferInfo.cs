@@ -5,8 +5,8 @@ namespace Speedy.Core
         public string InterfaceName { get; set; }
         public long Download { get; set; }
         public long Upload { get; set; }
-        public long DownloadInKiloBit => Download / 1024 * 8;
-        public long UploadInKiloBit => Upload / 1024 * 8;
+        public int DownloadInKiloBit => (int)(Download / 1024f * 8);
+        public int UploadInKiloBit => (int)(Upload / 1024f * 8);
         public NetworkTransferInfo()
         {
             

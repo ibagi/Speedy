@@ -16,16 +16,15 @@ namespace Speedy.Core
                 .ToList();
 
             var monitor = new NetworkMonitor(interfaces);
-            monitor.Start();
 
             while (true)
             {
                 if(token.IsCancellationRequested)
                 {
-                    monitor.Stop();
                     token.ThrowIfCancellationRequested();
                 }
 
+                monitor.Measure();
                 await Task.Delay(Interval);
 
                 var data = interfaces.Select(i => monitor.GetTransferInfo(i.Name))

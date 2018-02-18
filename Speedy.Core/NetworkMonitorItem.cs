@@ -10,8 +10,6 @@ namespace Speedy.Core
     public class NetworkMonitorItem
     {
         private readonly NetworkInterface _networkInterface;
-        private CancellationTokenSource _cancellation;
-
         private long _downloadMemo;
         private long _uploadMemo;
 
@@ -20,49 +18,12 @@ namespace Speedy.Core
             _networkInterface = networkInterface ?? throw new NullReferenceException(nameof(networkInterface));
         }
 
-        public void Start()
-        {
-            _cancellation = new CancellationTokenSource();
-            Task.Run(() => Loop(_cancellation.Token));
-        }
-
-        public void Stop()
-        {
-            if(_cancellation != null)
-            {
-                _cancellation.Cancel();
-            }
-        }
-
-        private async void Loop(CancellationToken token)
-        {
-            while(true)
-            {
-                try 
-                {
-                    if(token.IsCancellationRequested)
-                    {
-                        DownloadRate = 0;
-                        UploadRate = 0;
-                        break;
-                    }
-
-                    await Task.Delay(TimeSpan.FromSeconds(1), token);
-                    UpdateRates();
-                } 
-                catch(Exception)
-                {
-                }
-            }
-        }
-
-        private void UpdateRates()
+        public void Measure()
         {
             var statistics = _networkInterface.GetIPv4Statistics();
 
             DownloadRate =  statistics.BytesReceived - _downloadMemo;
             UploadRate = statistics.BytesSent - _uploadMemo;
-
             _downloadMemo = statistics.BytesReceived;
             _uploadMemo = statistics.BytesSent;
         }

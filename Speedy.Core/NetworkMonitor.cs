@@ -21,14 +21,9 @@ namespace Speedy.Core
                 .ToList();               
         }
 
-        public void Start()
+        public void Measure()
         {
-            _monitors.ForEach(i => i.Start());
-        }
-
-        public void Stop()
-        {
-            _monitors.ForEach(i => i.Stop());
+            _monitors.ForEach(i => i.Measure());
         }
 
         public NetworkTransferInfo GetTransferInfo(string interfaceName)
