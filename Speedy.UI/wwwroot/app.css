@@ -1,0 +1,27 @@
+body {
+    background-color: #5d9bc7;
+    color: white;
+    font-family: sans-serif;
+}
+
+.right {
+    float: right;
+}
+
+.caption {
+    color: #336b92;
+    font-size: 13px;
+    margin:  .5em 0;
+}
+.container {
+    padding: 10px;
+    border-bottom: 1px solid #3975a0;
+}
+
+.bar {
+    margin: 5px 0px;
+    background-color: #3975a0;
+    text-align: center;
+    padding: 3px;
+    font-size: 11px;
+}

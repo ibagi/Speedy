@@ -1,0 +1,18 @@
+{
+  "name": "speedy.ui",
+  "version": "1.0.0",
+  "description": "ASP .NET Core + Electron.js + React.js interface for Speedy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ASP",
+    ".NET",
+    "Core",
+    "Electron.NET",
+    "Networking"
+  ],
+  "author": "bagiimi@gmail.com",
+  "license": "ISC"
+}
