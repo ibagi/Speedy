@@ -1,23 +1,19 @@
 const { ipcRenderer } = require("electron");
 
-const getBarWidth = (value, min = 0, max = 300, scaleMin = 1, scaleMax = 100000) => {
-    if (!value || value <= 0)
-        return '50px';
-
+const getBarWidth = (value, min = 50, max = 300, scaleMin = 1, scaleMax = 100000) => {
     let minv = Math.log(scaleMin);
     let maxv = Math.log(scaleMax);
     let scale = (maxv - minv) / (max - min);
-    return ((Math.log(value) - minv) / scale + min) + 'px';
+    return (Math.log(Math.max(1, value || 0)) - minv) / scale + min + 'px';
 }
 
 const getBarCaption = (value) => {
-    if (!value || value <= 0)
-        return { value: 0, caption: 'KB/s' };
-
-    if (value < 1024)
-        return { value, caption: 'KB/s' };
-
-    return { value: (value / 1024).toFixed(2), caption: 'MB/s' };
+    if (!value || value <= 0) 
+        return { value: 0, caption: 'Kbit/s' };
+    if (value < 1024) 
+        return { value, caption: 'Kbit/s' };
+        
+    return { value: (value / 1024).toFixed(2), caption: 'Mbit/s' };
 }
 
 const SpeedData = ({ name, download, upload, downloadWidth, uploadWidth }) => `
