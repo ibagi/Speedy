@@ -1,0 +1,112 @@
+<Window 
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Icon="resm:Speedy.UI.Assets.favicon.ico"
+    WindowStartupLocation="CenterScreen"
+    Height="300"
+    Width="400"      
+    Title="Speedy">
+
+    <Window.Styles>
+        <Style Selector="Grid.Container">
+            <Setter Property="Background" Value="#5d9bc7"/>
+        </Style>
+
+        <Style Selector="TextBlock.Title">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style Selector="TextBlock.Caption">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="11"/>
+        </Style>
+
+        <Style Selector="TextBlock.Indicator">
+            <Setter Property="Foreground" Value="#3975a0"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+
+        <Style Selector="Border.Bar">
+            <Setter Property="Background" Value="#3975a0"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="3"/>
+        </Style>
+
+        <Style Selector="Border.Separator">
+            <Setter Property="Background" Value="#3975a0"/>
+        </Style>
+    </Window.Styles>
+
+    <Window.DataTemplates>
+        <DataTemplate x:Key="NetworkInfoItemTemplate">
+            <StackPanel Margin="10">
+
+                <TextBlock 
+                    Classes="Title" 
+                    Text="{Binding Name}"/>
+
+                <Grid ColumnDefinitions="*,Auto">
+
+                    <Border 
+                        Classes="Bar" 
+                        Width="{Binding DownloadBarWidth}">
+
+                        <TextBlock 
+                            Classes="Caption" 
+                            Text="{Binding DownloadText}"/>
+
+                    </Border>
+
+                    <TextBlock
+                        Grid.Column="1"
+                        Classes="Indicator" 
+                        Text="▼"/>
+                </Grid>
+
+                <Grid ColumnDefinitions="*,Auto">
+
+                    <Border 
+                        Classes="Bar" 
+                        Width="{Binding UploadBarWidth}">
+
+                        <TextBlock 
+                            Classes="Caption" 
+                            Text="{Binding UploadText}"/>
+                    </Border>
+
+                    <TextBlock
+                        Classes="Indicator"
+                        Grid.Column="1" 
+                        Text="▲"/>
+                </Grid>
+
+                <Border 
+                    Classes="Separator" 
+                    Height="1" 
+                    HorizontalAlignment="Stretch"/>
+            </StackPanel>
+        </DataTemplate>
+    </Window.DataTemplates>
+
+  <Grid 
+    Classes="Container"
+    RowDefinitions="Auto,*"> 
+
+    <TextBlock  
+        Classes="Caption" 
+        Grid.Row="0"
+        Margin="5"
+        HorizontalAlignment="Center" 
+        Text="Detected network interfaces"/>
+
+    <ItemsControl 
+        Grid.Row="1" 
+        Items="{Binding Data}"
+        ItemTemplate="{DynamicResource NetworkInfoItemTemplate}"/>
+
+  </Grid>
+  
+</Window>

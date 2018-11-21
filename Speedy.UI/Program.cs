@@ -1,30 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using ElectronNET.API;
+using Avalonia;
+using Avalonia.Logging.Serilog;
+using Speedy.Core;
+using Speedy.UI.ViewModels;
+using Speedy.UI.Views;
 
 namespace Speedy.UI
 {
-    public class Program
+    class Program
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            var monitorLoop = new NetworkMonitorLoop();
+
+            using(var cancellationTokenSource = new System.Threading.CancellationTokenSource())
+            {
+                monitorLoop.Run(cancellationTokenSource.Token);
+                BuildAvaloniaApp().Start<MainWindow>(() => new MainWindowViewModel(monitorLoop));
+            }
         }
 
-        public static IWebHost BuildWebHost(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder(args)
-                .UseContentRoot("wwwroot")
-                .UseElectron(args)
-                .UseStartup<Startup>()
-                .Build();          
-        }          
+        public static AppBuilder BuildAvaloniaApp()
+            => AppBuilder.Configure<App>()
+                .UsePlatformDetect()
+                .UseReactiveUI()
+                .LogToDebug();
     }
 }
